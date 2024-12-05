@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>猫のアドバイス</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <h1>猫のアドバイス</h1>
+    <div id="content">
+        <!-- ここにデータが表示されます -->
+    </div>
+    <button onclick="updateContent()">更新</button>
+
+    <script>
+        async function updateContent() {
+            try {
+                const response = await fetch('../PHP/get_data.php');
+                const data = await response.json();
+                console.log('Received data:', data); // デバッグ用
+        
+                // 現在のアドバイスを表示
+                document.getElementById('current-content').innerHTML = `
+                    <img src="${data.catImage}" alt="Cat">
+                    <p>${data.advice}</p>
+                `;
+            } catch (error) {
+                console.error('Error:', error);
+                alert('データの取得に失敗しました。');
+            }
+        }
+
+        // 初期表示
+        updateContent();
+    </script>
+</body>
+</html>
