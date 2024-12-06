@@ -7,7 +7,7 @@
 <body>
     <h1>猫のアドバイス</h1>
     <div id="content">
-        <!-- ここにデータが表示されます -->
+        
     </div>
     <button onclick="updateContent()">更新</button>
 
@@ -19,9 +19,9 @@
                 console.log('Received data:', data); // デバッグ用
         
                 // 現在のアドバイスを表示
-                document.getElementById('current-content').innerHTML = `
-                    <img src="${data.catImage}" alt="Cat">
-                    <p>${data.advice}</p>
+                document.getElementById('content').innerHTML = `
+                    <img src="${data.catImage}" alt="かなしい">
+                    <h2>${data.advice}</h2>
                 `;
             } catch (error) {
                 console.error('Error:', error);

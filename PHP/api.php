@@ -1,10 +1,10 @@
 <?php
+use DeepL\Translator;
+require_once __DIR__ . '/../vendor/autoload.php';
+//文字を取得する
 function fetchTextAPI($url)
 {
-    //cURLセッションの初期化
     $ch = curl_init();
-
-    //URLとオプションの設定
     curl_setopt_array($ch, [
         CURLOPT_URL => $url,
         CURLOPT_RETURNTRANSFER => true,
@@ -13,32 +13,17 @@ function fetchTextAPI($url)
             'Content-Type: application/json'
         ]
     ]);
-
-    //URLの情報を取得して返す
     $res = curl_exec($ch);
-
-    //エラー処理
     if ($res == false) {
-        $error = curl_error($ch);
         curl_close($ch);
-        return json_encode([
-            'status' => 'eroor',
-            'message' => "Request failed: $error"
-        ]);
+        return null;
     }
-    //接続を終わらせる
     curl_close($ch);
-    //json形式にデコードする
+
     $data = json_decode($res, true);
-
-    //成功したのでデータを送信する
-    return json_encode([
-        'status' => 'success',
-        'data' => $data
-    ], JSON_UNESCAPED_UNICODE);
-
+    return $data['slip']['advice'];
 }
-
+//画像を取得する
 function fetchImageAPI($url)
 {
     //cURLセッションの初期化
@@ -63,19 +48,34 @@ function fetchImageAPI($url)
     return $res;
 }
 
+//翻訳するAPIの作成
+function translateJA($text) {
+    $envPath = __DIR__ . '/../.env';
+    
+    if (!file_exists($envPath)) {
+        throw new Exception('.env file not found');
+    }
+    
+    $envContent = parse_ini_file($envPath);
+    $authKey = $envContent['API_KEY'];
+    
+    $translator = new \DeepL\Translator($authKey);
+    $result = $translator->translateText($text, null, 'ja');
+    
+    return $result->text;
+}
+
+
 //猫にアドバイスをもらえるAPIの作成
 function getCatAndAdvice()
 {
-    $advice = json_decode(fetchTextAPI('https://api.adviceslip.com/advice'), true);
-    $cat = base64_encode(fetchImageAPI('https://cataas.com/cat'));
-
+    $advice = fetchTextAPI('https://api.adviceslip.com/advice');
+    $translatedAdvice = translateJA($advice);
+    $cat = fetchImageAPI('https://cataas.com/cat?height=500');
+    
     return json_encode([
-        'advice' => $advice['slip']['advice'],
-        'catImage' => 'data:image/jpeg;base64,' . $cat
+        'advice' => $translatedAdvice,
+        'catImage' => 'data:image/jpeg;base64,' . base64_encode($cat)
     ]);
-
 }
-
-header('Content-Type: application/json; charset=utf-8');
-echo getCatAndAdvice();
 ?>

@@ -1,0 +1,73 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "9659807cdcb25b99d005d8f24664ea96",
+    "packages": [
+        {
+            "name": "deeplcom/deepl-php",
+            "version": "v0.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DeepLcom/deepl-php.git",
+                "reference": "9425afb394029431637cc85a7d6cb11b1112f6e3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DeepLcom/deepl-php/zipball/9425afb394029431637cc85a7d6cb11b1112f6e3",
+                "reference": "9425afb394029431637cc85a7d6cb11b1112f6e3",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": ">=7.3.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3",
+                "phpunit/phpunit": "^9",
+                "ramsey/uuid": "^4.2",
+                "squizlabs/php_codesniffer": "^3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DeepL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "DeepL SE",
+                    "email": "open-source@deepl.com"
+                }
+            ],
+            "description": "Official DeepL API Client Library",
+            "keywords": [
+                "api",
+                "deepl",
+                "translation",
+                "translator"
+            ],
+            "support": {
+                "issues": "https://github.com/DeepLcom/deepl-php/issues",
+                "source": "https://github.com/DeepLcom/deepl-php/tree/v0.4.1"
+            },
+            "time": "2022-08-12T08:13:11+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
+}
